@@ -1,5 +1,5 @@
-class AddLatitudeAndLongitudeToRestaurants < ActiveRecord::Migration
+class AddLatitudeAndLongitudeToPlaces < ActiveRecord::Migration
   def change
-    add_column :restaurants, :latitude, :float
+    add_column :places, :latitude, :float
   end
 end
