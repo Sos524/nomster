@@ -21,22 +21,18 @@
   <% if @place.latitude.present? && @place.longitude.present? %>
   
   <script>
-
 function initMap() {
   var myLatLng = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
-
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
     center: myLatLng
   });
-
   var marker = new google.maps.Marker({
     position: myLatLng,
     map: map,
     title: 'Hello World!'
   });
 }
-
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?signed_in=true&callback=initMap"></script>
@@ -51,6 +47,34 @@ function initMap() {
   <%= f.input :rating, as: :select, collection: Comment::RATINGS %>
   <%= f.submit "Add a Comment", class: 'btn btn-primary' %>
 <% end %>
+
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+   Add a comment
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add a comment</h4>
+      </div>
+
+      <%= simple_form_for @comment, url: place_comments_path(@place) do |f| %>
+        <div class="modal-body">
+          <%= f.input :message %>
+          <%= f.input :rating, as: :select, collection: Comment::RATINGS %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= f.submit "Add a Comment", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <% end %>
 
@@ -71,6 +95,7 @@ function initMap() {
 </div>
 
 
+
 <h1>Comments</h1>
 
 <% @place.comments.each do |comment| %>
@@ -84,3 +109,4 @@ function initMap() {
     </blockquote>
   </div>
 <% end %>
+
