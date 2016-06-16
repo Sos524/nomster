@@ -69,6 +69,29 @@ function initMap() {
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add a photo</h4>
+      </div>
+
+      <%= simple_form_for @photo, url: place_photos_path(@place) do |f| %>
+        <div class="modal-body">
+          <%= f.input :caption %>
+         <%= f.input :photo, type: :file %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= f.submit "Add a photo", class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <div class="col-xs-10 col-xs-offset-1">
 <h1 class="pull-left">Comments</h1>
 <!-- Button trigger modal -->
@@ -76,6 +99,11 @@ function initMap() {
   Add a comment
  </button>
 </div>
+
+<!-- Button trigger photo modal -->
+<button class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#photoModal">
+  Add a photo
+ </button>
 
 <div class="clear"></div>
 
@@ -109,6 +137,20 @@ function initMap() {
       <% end %>
       <%= comment.message %>
       <small><%= comment.user.email %></small>
+    </blockquote>
+  </div>
+<% end %>
+
+<!-- photo  -->
+<h1>photos</h1>
+
+<% @place.photos.each do |photo| %>
+ <div class="col-xs-12 col-sm-6">
+    <blockquote>
+      
+      
+      <%= photo.caption %>
+      <%= image_tag(photo.photo.url, class: "img-responsive") rescue "" %>
     </blockquote>
   </div>
 <% end %>

@@ -3,7 +3,7 @@ class NotificationMailer < ActionMailer::Base
 
    def comment_added
 
-   	mail(to: "sauce.thach@gmail.com",
+   	mail(to: "saucefirehosedev@gmail.com",
          subject: "A comment has been added to your place")
    end
 
